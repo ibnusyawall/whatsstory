@@ -10,10 +10,7 @@ LOG_DIR="$OUTPUT_DIR/logs"
 TODAY=$(date '+%Y-%m-%d')
 LOG_FILE="$LOG_DIR/$TODAY.log"
 
-SOURCE_DIRS=(
-  "/storage/ace-999/Android/media/com.whatsapp/WhatsApp/Media/.Statuses"
-  "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses"
-)
+IFS=',' read -ra SOURCE_DIRS <<< "$STATUS_DIRS"
 
 # === INIT ===
 mkdir -p "$OUTPUT_DIR"
