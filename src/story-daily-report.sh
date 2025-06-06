@@ -5,8 +5,7 @@ if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-DEST_DIR="/storage/emulated/0/.DailyStoryWa"
-LOG_DIR="$DEST_DIR/logs"
+LOG_DIR="$OUTPUT_DIR/logs"
 TODAY=$(date '+%Y-%m-%d')
 LOG_FILE="$LOG_DIR/$TODAY.log"
 

@@ -1,9 +1,12 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 # === CONFIG ===
-DEST_DIR="/storage/emulated/0/.DailyStoryWa"
-ARCHIVE_DIR="$DEST_DIR/arsip"
-LOG_DIR="$DEST_DIR/logs"
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+ARCHIVE_DIR="$OUTPUT_DIR/arsip"
+LOG_DIR="$OUTPUT_DIR/logs"
 TODAY=$(date '+%Y-%m-%d')
 LOG_FILE="$LOG_DIR/$TODAY.log"
 
@@ -13,7 +16,7 @@ SOURCE_DIRS=(
 )
 
 # === INIT ===
-mkdir -p "$DEST_DIR"
+mkdir -p "$OUTPUT_DIR"
 mkdir -p "$ARCHIVE_DIR"
 mkdir -p "$LOG_DIR"
 
@@ -30,7 +33,7 @@ for SRC in "${SOURCE_DIRS[@]}"; do
     BASENAME=$(basename "$FILE")
 
     if [ "$MOD_DATE" = "$TODAY" ]; then
-      DEST_FILE="$DEST_DIR/$BASENAME"
+      DEST_FILE="$OUTPUT_DIR/$BASENAME"
       if [ ! -f "$DEST_FILE" ]; then
         cp "$FILE" "$DEST_FILE"
         log "Copied today: $BASENAME"
@@ -47,7 +50,7 @@ for SRC in "${SOURCE_DIRS[@]}"; do
   done
 done
 
-for FILE in "$DEST_DIR"/*.{jpg,mp4}; do
+for FILE in "$OUTPUT_DIR"/*.{jpg,mp4}; do
   [ -e "$FILE" ] || continue
 
   MOD_DATE=$(date -r "$FILE" '+%Y-%m-%d')
